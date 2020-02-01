@@ -16,4 +16,23 @@ bus.post('/bus_post', (req,res) => {
     })
 });
 
+// 2
+bus.post("/spot",(req,res)=>{
+    let Bus_number = req.body.Bus_number;
+    busDB.free_spot(Bus_number)
+    .then((data)=>{
+        if(data.length == 0){
+            res.send("You can't park here")
+        }
+        else if(data[0]["Bus_number"] == Bus_number){
+            res.send("you can park here")
+        }
+        else{ 
+            res.send("You can't park here.....")
+        }
+    }).catch((err)=>{
+        res.send(err)
+    })
+});
+
 module.exports = bus
